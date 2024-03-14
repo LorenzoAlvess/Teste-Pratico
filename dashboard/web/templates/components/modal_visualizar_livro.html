@@ -1,0 +1,73 @@
+<!-- Componente Modal de Visualização de livro -->
+<div id="modalVisualizarlivro" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModalView()">×</span>
+        <h2 id="nomelivro">Visualizar livro</h2>
+        <div>
+            <p>Nome: <span id="nomelivroSpan"></span></p>
+            <p>Biblioteca: <span id="bibliotecaSpan"></span></p>
+            <p>Data de Criação: <span id="dataCriacao"></span></p>
+            <p>Id: <span id="livroIdSpan"></span></p>
+        </div>
+        <input type="hidden" id="livroId">
+        <button onclick="prepararExclusao()" class="btn-excluir">Excluir livro</button>
+    </div>
+</div>
+
+
+<!-- Componente Modal de Confirmação de Exclusão de livro -->
+<div id="modalConfirmacaoExclusao" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModalDelete()">×</span>
+        <h2>Confirmar Exclusão</h2>
+        <p>Tem certeza que deseja excluir a livro <span id="nomelivroExclusao"></span>?</p>
+        <button onclick="excluirlivro()" class="btn-confirmar-exclusao">Confirmar Exclusão</button>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    // Função para abrir o modal de visualização de livro e preencher os campos
+    function openVisualizarModal(livroId, livroName, bibliotecaId, bibliotecaName, dataCriacao) {
+        document.getElementById('modalVisualizarlivro').style.display = 'block'; // Exibe o modal de visualização de livro
+        document.getElementById('livroId').value = livroId;
+        document.getElementById('livroIdSpan').innerText = livroId;
+        document.getElementById('nomelivro').innerText = livroName;
+        document.getElementById('nomelivroSpan').innerText = livroName;
+        document.getElementById('bibliotecaSpan').innerText = bibliotecaName;
+        document.getElementById('bibliotecaId').value = bibliotecaId;
+        document.getElementById('dataCriacao').innerText = dataCriacao;
+    }
+    function closeModalDelete() {
+        document.getElementById('modalConfirmacaoExclusao').style.display = 'none';
+    }
+    function closeModalView() {
+        document.getElementById('modalVisualizarlivro').style.display = 'none';
+    }
+
+
+    // Função para abrir o modal de confirmação de exclusão
+    function prepararExclusao() {
+        var nomelivro = document.getElementById('nomelivro').innerText;
+        document.getElementById('nomelivroExclusao').innerText = nomelivro;
+        document.getElementById('modalConfirmacaoExclusao').style.display = 'block';
+
+    }
+    // Função para confirmar a exclusão da livro
+    function excluirlivro() {
+        var livroId = document.getElementById('livroId').value;
+        var libraryId = document.getElementById('bibliotecaId').value; // Obtém o ID da biblioteca da página
+        var url = "{% url 'api:book-detail' 0 0 %}".replace('0', libraryId).replace('0', livroId); // Monta a URL com os IDs
+
+        $.ajax({
+            url: url,
+            type: 'DELETE',
+            success: function(result) {
+                window.location.reload(); // Recarrega a página após a exclusão bem-sucedida
+            }
+        });
+
+    }
+
+
+</script>
