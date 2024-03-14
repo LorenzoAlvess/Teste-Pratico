@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% load static %}
+{% include 'components/header.html' %}
+{% include 'components/navbar.html' %}
+
+
+
+
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Seu Título Aqui{% endblock %}</title>
+    <!-- Adicione aqui links para arquivos CSS, JavaScript, etc., se necessário -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/modal_styles.css' %}">
+</head>
+<body>
+
+    <!-- Conteúdo da página -->
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+</body>
+{% include 'components/footer.html' %}
+</html>
