@@ -1,0 +1,91 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1>Livros</h1>
+
+    <div class="main">
+
+        <!-- Incluindo o modal de cadastro de biblioteca -->
+        {% include 'components/modal_cadastro_livro.html' %}
+
+        <!-- Lista de bibliotecas -->
+        <div class="bibliotecas">
+            <div class="bibliotecas-container">
+                <!-- Cabeçalho da lista de bibliotecas -->
+                <div class="biblioteca-row">
+                    <div class="biblioteca-info">
+                        <div class="info-container">
+                            <strong>Name</strong>
+                        </div>
+                        <div class="info-container">
+                            <strong>Data de Criação</strong>
+                        </div>
+                        <div class="info-container">
+                            <strong>Biblioteca</strong>
+                        </div>
+                        <div class="opcoes">
+                            <button onclick="openModalCadastroLivro('{{biblioteca_id}}')" class="btn btn-adicionar">Adicionar Novo Livro</button>
+                        </div>
+                    </div>
+                </div>
+                {% if livros %}
+                    <!-- Loop para exibir as bibliotecas -->
+                    {% for livro in livros %}
+                        <div class="biblioteca-row">
+                            <div class="biblioteca-info">
+                                <!-- Detalhes do livro -->
+                                <div class="info-container">
+                                    
+                                    {{ livro.name }}
+                                </div>
+                                <div class="info-container">
+                                    {{ livro.creation_date }}
+                                </div>
+                                <div class="info-container">
+                                    {{ livro.library.name }}
+                                </div>
+                                <div class="opcoes">
+                                    <div class="row">
+                                        <button onclick="openVisualizarModal('{{ livro.id }}', '{{ livro.name }}', '{{ livro.library.id }}','{{ livro.library.name }}', '{{ livro.creation_date }}')" class="btn btn-visualizar btn-sm mr-2">Visualizar</button>
+                                        <button onclick="openEditarModal('{{ livro.id }}', '{{ livro.name }}', '{{ biblioteca_id }}')" class="btn btn-editar btn-sm">Editar</button>                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Nenhum livro encontrado.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Modais -->
+
+    {% include 'components/modal_editar_livro.html' %}
+    {% include 'components/modal_visualizar_livro.html' %}
+    <!-- Script para abrir e fechar o modal -->
+    <script>
+        function openModal() {
+            document.getElementById("myModal").style.display = "block";
+        }
+        
+        function closeModalLivro() {
+            document.getElementById("myModal").style.display = "none";
+            document.getElementById("modalEditarLivro").style.display = "none";
+            document.getElementById("modalVisualizarLivro").style.display = "none"; 
+
+        }
+        window.onclick = function(event) {
+            var modais = document.getElementsByClassName("modal");
+            for (var i = 0; i < modais.length; i++) {
+                if (event.target == modais[i]) {
+                    closeModalLivro();
+                }
+            }
+        }
+
+    </script>
+
+{% endblock %}
