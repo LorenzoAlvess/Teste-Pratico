@@ -1,0 +1,47 @@
+<!-- templates/modal_cadastro_biblioteca.html -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Cadastrar Nova Biblioteca</h2>
+        <!-- Formulário de cadastro de biblioteca -->
+        <form id="cadastroBibliotecaForm" method="post" action="{% url 'api:library-list' %}">
+            {% csrf_token %}
+            <label for="name">Nome:</label><br>
+            <input type="text" id="name" name="name" required><br>
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Função para fechar o modal
+    function closeModal() {
+        document.getElementById("myModal").style.display = "none";
+    }
+
+    // Atualiza a página após o formulário ser enviado com sucesso
+    document.getElementById("cadastroBibliotecaForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Impede o envio do formulário padrão
+
+        // Envia o formulário via AJAX para a API de cadastro
+        fetch(this.action, {
+            method: 'POST',
+            body: new FormData(this),
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}' // Adiciona o token CSRF ao cabeçalho da requisição
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                closeModal(); // Fecha o modal
+                location.reload(); // Recarrega a página
+            } else {
+                // Trate erros de resposta da API, se necessário
+                console.error('Erro ao cadastrar biblioteca:', response.statusText);
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao cadastrar biblioteca:', error);
+        });
+    });
+</script>
