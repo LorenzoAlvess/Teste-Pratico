@@ -1,0 +1,46 @@
+<!-- Componente Modal de Edição de Biblioteca -->
+<div id="modalEditarBiblioteca" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModalEdit()">×</span>
+        <h2>Editar Biblioteca</h2>
+        <div>
+            <label for="novoNomeBiblioteca">Novo Nome:</label>
+            <input type="text" id="novoNomeBiblioteca" placeholder="Digite o novo nome da biblioteca">
+        </div>
+        <input type="hidden" id="bibliotecaIdEditar"><br>
+        <button onclick="editarBiblioteca()" class="btn-editar">Salvar</button>
+    </div>
+</div>
+
+<script>
+    // Função para abrir o modal de edição de biblioteca e preencher o campo com o nome atual
+    function openEditarModal(bibliotecaId, bibliotecaName) {
+        document.getElementById('modalEditarBiblioteca').style.display = 'block';
+        document.getElementById('bibliotecaIdEditar').value = bibliotecaId;
+        if (bibliotecaName) {
+            document.getElementById('novoNomeBiblioteca').value = bibliotecaName;
+        }
+    }
+
+    // Função para fechar o modal de edição de biblioteca
+    function closeModalEdit() {
+        document.getElementById('modalEditarBiblioteca').style.display = 'none';
+    }
+
+    // Função para editar o nome da biblioteca
+    function editarBiblioteca() {
+        var id = document.getElementById('bibliotecaIdEditar').value;
+        var novoNome = document.getElementById('novoNomeBiblioteca').value;
+        var url = "{% url 'api:library-detail' 0 %}".replace('0', id);
+
+        $.ajax({
+            url: url,
+            type: 'PUT',
+            data: { name: novoNome },
+            success: function(result) {
+                closeModalEdit(); // Fecha o modal de edição
+                window.location.reload(); // Recarrega a página após a edição bem-sucedida
+            }
+        });
+    }
+</script>
