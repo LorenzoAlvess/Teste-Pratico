@@ -1,0 +1,48 @@
+<!-- Componente Modal de Edição de Livro -->
+<div id="modalEditarLivro" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModalEdit()">×</span>
+        <h2>Editar Livro</h2>
+        <div>
+            <label for="novoNomeLivro">Novo Nome:</label>
+            <input type="text" id="novoNomeLivro" placeholder="Digite o novo nome do livro">
+        </div>
+        <input type="hidden" id="livroIdEditar">
+        <input type="hidden" id="bibliotecaId"><br>
+        <button onclick="editarLivro()" class="btn-editar">Salvar</button>
+    </div>
+</div>
+
+<script>
+    // Função para abrir o modal de edição de livro e preencher o campo com o nome atual
+    function openEditarModal(livroId, livroName, bibliotecaId) {
+        document.getElementById('modalEditarLivro').style.display = 'block';
+        document.getElementById('livroIdEditar').value = livroId;
+        document.getElementById('bibliotecaId').value = bibliotecaId;
+        if (livroName) {
+            document.getElementById('novoNomeLivro').value = livroName;
+        }
+    }
+
+    function closeModalEdit() {
+        document.getElementById('modalEditarLivro').style.display = 'none';
+    }
+
+    // Função para editar o nome do livro
+    function editarLivro() {
+        var livroId = document.getElementById('livroIdEditar').value;
+        var novoNome = document.getElementById('novoNomeLivro').value;
+        var libraryId = document.getElementById('bibliotecaId').value; // Obtém o ID da biblioteca da página
+        var url = "{% url 'api:book-detail' 0 0 %}".replace('0', libraryId).replace('0', livroId); // Monta a URL com os IDs
+
+        $.ajax({
+            url: url,
+            type: 'PUT',
+            data: { name: novoNome, library: libraryId }, // Adiciona o ID da biblioteca aos dados enviados
+            success: function(result) {
+                closeModalEdit(); // Fecha o modal após a edição bem-sucedida
+                window.location.reload(); // Recarrega a página após a edição bem-sucedida
+            }
+        });
+    }
+</script>
