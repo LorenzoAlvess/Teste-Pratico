@@ -1,0 +1,99 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1>Bibliotecas</h1>
+    <div class="main">
+
+
+        <!-- Incluindo o modal de cadastro de biblioteca -->
+        {% include 'components/modal_cadastro_biblioteca.html' %}
+
+        <!-- Lista de bibliotecas -->
+        <div class="bibliotecas">
+            <div class="bibliotecas-container">
+                <!-- Cabeçalho da lista de bibliotecas -->
+                <div class="biblioteca-row">
+                    <div class="biblioteca-info">
+                        <div class="info-container">
+                            <strong>Name</strong>
+                        </div>
+                        <div class="info-container">
+                            <strong>Data de Criação</strong>
+                        </div>
+                        <div class="info-container">
+                            <strong>Número de Livros</strong>
+                        </div>
+                        <div class="opcoes">
+                            <button onclick="openModal()" class="btn btn-adicionar">Adicionar Nova Biblioteca</button>
+                        </div>
+                    </div>
+                </div>
+                {% if bibliotecas %}
+                    <!-- Loop para exibir as bibliotecas -->
+                    {% for biblioteca in bibliotecas %}
+                        <div class="biblioteca-row">
+                            <div class="biblioteca-info">
+                                <!-- Detalhes da biblioteca -->
+                                <div class="info-container">
+                                    {{ biblioteca.name }}
+                                </div>
+                                <div class="info-container">
+                                    {{ biblioteca.creation_date }}
+                                </div>
+                                <div class="info-container">
+                                    {{ biblioteca.num_books }}
+                                </div>
+                                <div class="opcoes">
+                                    <div class="row">
+                                        <button onclick="openVisualizarModal('{{ biblioteca.id }}', '{{ biblioteca.name }}', '{{ biblioteca.num_books}}', '{{ biblioteca.creation_date}}')" class="btn btn-visualizar mr-2 d-inline-block">Visualizar</button>
+                                        <button onclick="openEditarModal('{{ biblioteca.id }}', '{{ biblioteca.name }}')" class="btn btn-editar d-inline-block">Editar</button>
+                                                                              
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Nenhuma biblioteca encontrada.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Modais -->
+    {% include 'components/modal_editar_biblioteca.html' %}
+    {% include 'components/modal_visualizar_biblioteca.html' %}
+
+    <!-- Script para abrir e fechar o modal -->
+    <script>
+        // Função para abrir o modal de cadastro de nova biblioteca
+        function openModal() {
+            document.getElementById("myModal").style.display = "block";
+        }
+
+        // Função para fechar o modal
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+            document.getElementById("modalEditarBiblioteca").style.display = "none"; // Fecha o modal de exclusão também
+            document.getElementById("modalVisualizarBiblioteca").style.display = "none"; // Fecha o modal de visualização também
+            
+        }
+
+        function closeModalConfirm() {
+            document.getElementById("modalConfirmacaoExclusao").style.display = "none";
+        }
+
+        // Fechar o modal se o usuário clicar fora dele
+        window.onclick = function(event) {
+            var modais = document.getElementsByClassName("modal");
+            for (var i = 0; i < modais.length; i++) {
+                if (event.target == modais[i]) {
+                    closeModal();
+                }
+            }
+        }
+
+
+    </script>
+{% endblock %}
