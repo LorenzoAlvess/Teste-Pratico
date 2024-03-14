@@ -1,0 +1,77 @@
+<!-- Componente Modal de Visualização de Biblioteca -->
+<div id="modalVisualizarBiblioteca" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">×</span>
+        <h2 id="nomeBiblioteca">Visualizar Biblioteca</h2>
+        <div class="left-align">
+            <p>Nome: <span id="nomeBibliotecaSpan"></span></p>
+            <p>Quantidade de Livros: <span id="quantidadeLivros"></span></p>
+            <p>Data de Criação: <span id="dataCriacao"></span></p>
+            <p>Id: <span id="bibliotecaIdSpan"></span></p>
+        </div>
+        <input type="hidden" id="bibliotecaId">
+        <div class="modal-buttons">
+        <button onclick="prepararExclusao()" class="btn-excluir">Excluir Biblioteca</button><br><br>
+        <a href="#" onclick="irParaBiblioteca()" class="btn-ir-biblioteca">Ir para Página da Biblioteca</a>
+    </div>
+</div>
+
+<script>
+    function irParaBiblioteca() {
+        var bibliotecaId = document.getElementById('bibliotecaIdSpan').innerText;
+        var url = "{% url 'web:livros' 0 %}".replace('0', bibliotecaId);
+        closeModal();
+        window.location.href = url;
+    }
+</script>
+
+<!-- Componente Modal de Confirmação de Exclusão de Biblioteca -->
+<div id="modalConfirmacaoExclusao" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">×</span>
+        <h2>Confirmar Exclusão</h2>
+        <p>Tem certeza que deseja excluir a biblioteca <span id="nomeBibliotecaExclusao"></span>?</p>
+        <button onclick="excluirBiblioteca()" class="btn-confirmar-exclusao">Confirmar Exclusão</button>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    // Função para abrir o modal de visualização de biblioteca e preencher os campos
+    function openVisualizarModal(bibliotecaId, bibliotecaName, quantidadeLivros, dataCriacao) {
+        document.getElementById('modalVisualizarBiblioteca').style.display = 'block';
+        document.getElementById('bibliotecaId').value = bibliotecaId;
+        document.getElementById('bibliotecaIdSpan').innerText = bibliotecaId;
+        document.getElementById('nomeBiblioteca').innerText = bibliotecaName;
+        document.getElementById('nomeBibliotecaSpan').innerText = bibliotecaName;
+        document.getElementById('quantidadeLivros').innerText = quantidadeLivros;
+        document.getElementById('dataCriacao').innerText = dataCriacao;
+    }
+
+    // Função para abrir o modal de confirmação de exclusão
+    function prepararExclusao() {
+        var nomeBiblioteca = document.getElementById('nomeBiblioteca').innerText;
+        document.getElementById('nomeBibliotecaExclusao').innerText = nomeBiblioteca;
+        document.getElementById('modalConfirmacaoExclusao').style.display = 'block';
+    }
+
+    // Função para confirmar a exclusão da biblioteca
+    function excluirBiblioteca() {
+        var id = document.getElementById('bibliotecaId').value;
+        var url = "{% url 'api:library-detail' 0 %}".replace('0', id);
+
+        $.ajax({
+            url: url,
+            type: 'DELETE',
+            success: function(result) {
+                closeModal(); // Fecha o modal de confirmação
+                window.location.reload(); // Recarrega a página após a exclusão bem-sucedida
+            }
+        });
+    }
+
+    // Função para fechar qualquer modal
+    function closeModal() {
+        document.getElementById('modalConfirmacaoExclusao').style.display = 'none';
+    }
+</script>
