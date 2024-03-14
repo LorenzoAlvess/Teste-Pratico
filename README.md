@@ -55,7 +55,7 @@ Integrar um gráfico simples que forneça uma representação visual dos dados. 
      ```bash
      git clone https://github.com/LorenzoAlvess/Teste-Pratico.git
      ```
-   - Acesse a pasta do projeto:
+   - Após acessar a pasta do projeto, entre dentro de dashboard:
      ```bash
      cd dashboard
      ```
