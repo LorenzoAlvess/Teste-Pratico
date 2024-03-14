@@ -1,0 +1,36 @@
+{% extends 'pages/base.html' %}
+
+{% block title %}Home - Meu Site{% endblock %}
+
+{% block content %}
+
+    <div class="main">
+        <div class="main d-flex align-items-center justify-content-center flex-column" style="height: 100vh;">
+            <h1 class="mb-4">Bem-vindo à Página Inicial!</h1>
+            
+            <p class="lead mb-4">Esta página apresenta as funcionalidades disponíveis no projeto.</p>
+            
+            <section class="mb-4">
+                <h2>CRUD Biblioteca</h2>
+                <p><strong>Entidade:</strong> Biblioteca</p>
+                <p><strong>Campos:</strong> Nome, Data de Criação, Número de Livros Cadastrados</p>
+                <p><strong>Operações:</strong> Adicionar, Visualizar Detalhes, Atualizar, Excluir</p>
+            </section>
+            
+            <section class="mb-4">
+                <h2>CRUD Livros</h2>
+                <p><strong>Entidade:</strong> Livros</p>
+                <p><strong>Campos:</strong> Nome, Data de Criação</p>
+                <p><strong>Operações:</strong> Adicionar, Visualizar Detalhes, Atualizar, Excluir</p>
+            </section>
+            
+            <section class="mb-4">
+                <h2>Gráfico 📈</h2>
+            </section>
+            
+            <div>
+                <a href="{% url 'web:bibliotecas' %}" class="btn btn-primary btn-lg">Ver Bibliotecas</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
