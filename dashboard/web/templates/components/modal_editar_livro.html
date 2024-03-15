@@ -16,7 +16,7 @@
 <script>
     // Função para abrir o modal de edição de livro e preencher o campo com o nome atual
     function openEditarModal(livroId, livroName, bibliotecaId) {
-        document.getElementById('modalEditarLivro').style.display = 'block';
+        document.getElementById('modalEditarLivro').classList.add("show");
         document.getElementById('livroIdEditar').value = livroId;
         document.getElementById('bibliotecaId').value = bibliotecaId;
         if (livroName) {
@@ -25,7 +25,7 @@
     }
 
     function closeModalEdit() {
-        document.getElementById('modalEditarLivro').style.display = 'none';
+        document.getElementById('modalEditarLivro').classList.remove("show");
     }
 
     // Função para editar o nome do livro

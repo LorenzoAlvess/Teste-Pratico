@@ -69,19 +69,19 @@
     <script>
         // Função para abrir o modal de cadastro de nova biblioteca
         function openModal() {
-            document.getElementById("myModal").style.display = "block";
+            document.getElementById("myModal").classList.add("show");
         }
 
         // Função para fechar o modal
         function closeModal() {
-            document.getElementById("myModal").style.display = "none";
-            document.getElementById("modalEditarBiblioteca").style.display = "none"; // Fecha o modal de exclusão também
-            document.getElementById("modalVisualizarBiblioteca").style.display = "none"; // Fecha o modal de visualização também
+            document.getElementById("myModal").classList.remove("show");
+            document.getElementById("modalEditarBiblioteca").classList.remove("show"); // Fecha o modal de exclusão também
+            document.getElementById("modalVisualizarBiblioteca").classList.remove("show"); // Fecha o modal de visualização também
             
         }
 
         function closeModalConfirm() {
-            document.getElementById("modalConfirmacaoExclusao").style.display = "none";
+            document.getElementById("modalConfirmacaoExclusao").classList.remove("show");
         }
 
         // Fechar o modal se o usuário clicar fora dele

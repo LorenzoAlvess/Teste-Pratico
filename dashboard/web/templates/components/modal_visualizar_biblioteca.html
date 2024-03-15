@@ -39,7 +39,7 @@
 <script>
     // Função para abrir o modal de visualização de biblioteca e preencher os campos
     function openVisualizarModal(bibliotecaId, bibliotecaName, quantidadeLivros, dataCriacao) {
-        document.getElementById('modalVisualizarBiblioteca').style.display = 'block';
+        document.getElementById('modalVisualizarBiblioteca').classList.add("show");
         document.getElementById('bibliotecaId').value = bibliotecaId;
         document.getElementById('bibliotecaIdSpan').innerText = bibliotecaId;
         document.getElementById('nomeBiblioteca').innerText = bibliotecaName;
@@ -52,7 +52,7 @@
     function prepararExclusao() {
         var nomeBiblioteca = document.getElementById('nomeBiblioteca').innerText;
         document.getElementById('nomeBibliotecaExclusao').innerText = nomeBiblioteca;
-        document.getElementById('modalConfirmacaoExclusao').style.display = 'block';
+        document.getElementById('modalConfirmacaoExclusao').classList.add("show");
     }
 
     // Função para confirmar a exclusão da biblioteca
@@ -72,6 +72,6 @@
 
     // Função para fechar qualquer modal
     function closeModal() {
-        document.getElementById('modalConfirmacaoExclusao').style.display = 'none';
+        document.getElementById('modalConfirmacaoExclusao').classList.remove("show");
     }
 </script>

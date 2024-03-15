@@ -15,7 +15,7 @@
 <script>
     // Função para abrir o modal de edição de biblioteca e preencher o campo com o nome atual
     function openEditarModal(bibliotecaId, bibliotecaName) {
-        document.getElementById('modalEditarBiblioteca').style.display = 'block';
+        document.getElementById('modalEditarBiblioteca').classList.add("show");
         document.getElementById('bibliotecaIdEditar').value = bibliotecaId;
         if (bibliotecaName) {
             document.getElementById('novoNomeBiblioteca').value = bibliotecaName;
@@ -24,7 +24,7 @@
 
     // Função para fechar o modal de edição de biblioteca
     function closeModalEdit() {
-        document.getElementById('modalEditarBiblioteca').style.display = 'none';
+        document.getElementById('modalEditarBiblioteca').classList.remove("show");
     }
 
     // Função para editar o nome da biblioteca

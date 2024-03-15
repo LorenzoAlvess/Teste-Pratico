@@ -19,12 +19,12 @@
     // Função para abrir o modal de cadastro de livro
     function openModalCadastroLivro(bibliotecaId) {
         document.getElementById("bibliotecaId").value = bibliotecaId;
-        document.getElementById("modalCadastroLivro").style.display = "block";
+        document.getElementById("modalCadastroLivro").classList.add("show");
     }
 
     // Função para fechar o modal de cadastro de livro
     function closeModalCadastroLivro() {
-        document.getElementById("modalCadastroLivro").style.display = "none";
+        document.getElementById("modalCadastroLivro").classList.remove("show");
     }
 
     // Atualiza a página após o formulário ser enviado com sucesso

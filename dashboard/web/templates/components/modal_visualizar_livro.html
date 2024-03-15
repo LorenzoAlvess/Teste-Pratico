@@ -29,7 +29,7 @@
 <script>
     // Função para abrir o modal de visualização de livro e preencher os campos
     function openVisualizarModal(livroId, livroName, bibliotecaId, bibliotecaName, dataCriacao) {
-        document.getElementById('modalVisualizarlivro').style.display = 'block'; // Exibe o modal de visualização de livro
+        document.getElementById('modalVisualizarlivro').classList.add("show"); // Exibe o modal de visualização de livro
         document.getElementById('livroId').value = livroId;
         document.getElementById('livroIdSpan').innerText = livroId;
         document.getElementById('nomelivro').innerText = livroName;
@@ -39,10 +39,10 @@
         document.getElementById('dataCriacao').innerText = dataCriacao;
     }
     function closeModalDelete() {
-        document.getElementById('modalConfirmacaoExclusao').style.display = 'none';
+        document.getElementById('modalConfirmacaoExclusao').classList.remove("show");
     }
     function closeModalView() {
-        document.getElementById('modalVisualizarlivro').style.display = 'none';
+        document.getElementById('modalVisualizarlivro').classList.remove("show");
     }
 
 
@@ -50,7 +50,7 @@
     function prepararExclusao() {
         var nomelivro = document.getElementById('nomelivro').innerText;
         document.getElementById('nomelivroExclusao').innerText = nomelivro;
-        document.getElementById('modalConfirmacaoExclusao').style.display = 'block';
+        document.getElementById('modalConfirmacaoExclusao').classList.add("show");
 
     }
     // Função para confirmar a exclusão da livro
